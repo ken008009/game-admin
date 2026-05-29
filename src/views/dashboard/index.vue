@@ -90,6 +90,7 @@
           <el-table-column label="L3业绩" prop="recommendTotalBiwThree" align="center" />
           <el-table-column label="邀请收益" prop="recommendTotalRewardThree" align="center" />
           <el-table-column label="粮仓质押数量" prop="myStakeGit" align="center" />
+          <el-table-column label="粮仓排队中金额" prop="myStakeGitQueue" align="center" />
           <el-table-column label="果实放大器质押" prop="myStakeGetTotal" align="center" />
 
           <el-table-column
