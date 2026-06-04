@@ -7,7 +7,7 @@
         <div class="head-container">
           <div class="cont-tab">
             <el-radio-group v-model="coinType" @input="switchTypeHandler">
-              <!-- <el-radio :label="'biw'">ISPAY</el-radio> -->
+              <el-radio :label="'biw'">ISPAY</el-radio>
               <el-radio :label="'usdt'">USDT</el-radio>
               <!-- <el-radio :label="'usdt_two'">USDT充值BIW</el-radio> -->
             </el-radio-group>

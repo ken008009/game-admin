@@ -23,12 +23,14 @@
           <el-table-column label="用户地址" prop="userAddress" align="center" />
           <el-table-column label="时间" prop="createdAt" align="center" />
           <el-table-column label="金额" prop="amount" align="center" />
-          <el-table-column label="下级地址" prop="address" align="center" />
-          <el-table-column label="类型" align="center">
+          <el-table-column v-if="!rewardType === '33'" label="下级地址" prop="address" align="center" />
+          <el-table-column v-if="!rewardType === '33'" label="类型" align="center">
             <template slot-scope="scope">
               <span>{{ getLabel(scope.row.rewardType) }}</span>
             </template>
           </el-table-column>
+          <el-table-column v-if="rewardType === '27'" label="ispay数量" prop="AmountTwo" align="center" />
+
           <!-- <el-table-column
             fixed="right"
             width="150"
@@ -91,7 +93,9 @@ export default {
         { type: '41', label: 'L1土地动态' },
         { type: '42', label: 'L2土地动态' },
         { type: '43', label: 'L3土地动态' },
-        { type: '51', label: '土地静态' }
+        { type: '51', label: '土地静态' },
+        { type: '27', label: '团队极差' },
+        { type: '33', label: '前八名奖励' }
       ]
     }
   },
