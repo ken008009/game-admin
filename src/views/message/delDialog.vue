@@ -26,6 +26,7 @@
 <script>
 import { delAdminMsg } from '@/api/orderModel'
 const default_form = {
+  id: '',
   content: '',
   contentTwo: ''
 }

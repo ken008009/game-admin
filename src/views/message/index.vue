@@ -90,7 +90,7 @@ export default {
       this.$refs.form.dialog = true
     },
     delHandler: function(item) {
-      this.$refs.form2.form = item
+      this.$refs.form2.form = JSON.parse(JSON.stringify(item))
       this.$refs.form2.dialog = true
     },
     initList(page) {
