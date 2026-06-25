@@ -176,6 +176,13 @@ export function withDrawList(params) {
     params
   })
 }
+export function userStakeList(params) {
+  return request({
+    url: '/api/admin_dhb/user_stake_list',
+    method: 'get',
+    params
+  })
+}
 export function landList(params) {
   return request({
     url: '/api/admin_dhb/land_config_list',

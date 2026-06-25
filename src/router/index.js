@@ -79,6 +79,17 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/userstakelist',
+    component: Layout,
+    redirect: '/userstakelist',
+    children: [{
+      path: 'userstakelist',
+      name: 'UserStakeList',
+      component: () => import('@/views/userstakelist/index'),
+      meta: { title: '用户质押列表', icon: 'el-icon-s-data' }
+    }]
+  },
+  {
     path: '/recharge',
     component: Layout,
     redirect: '/recharge',

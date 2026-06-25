@@ -5,12 +5,6 @@
       <!--用户数据-->
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <div class="head-container">
-          <!-- <div class="cont-tab">
-            <el-radio-group v-model="coinType" @input="switchTypeHandler">
-              <el-radio :label="'biw'">ISPAY</el-radio>
-              <el-radio :label="'usdt'">USDT</el-radio>
-            </el-radio-group>
-          </div> -->
           <div class="cont-search">
             <span>地址：</span>
             <el-input v-model="form.address" class="input-desc" placeholder="请输入用户地址" />
@@ -21,26 +15,14 @@
         </div>
         <!--表格渲染-->
         <el-table v-loading="loading" :data="list" size="small" empty-text="暂无数据" style="width: 100%; margin-top: 20px;">
-          <el-table-column label="ID" prop="id" align="center" width="100" />
           <el-table-column label="地址" prop="address" align="center" width="200" />
-          <el-table-column label="时间" prop="createdAt" align="center" />
-          <el-table-column label="金额" prop="amount" align="center" />
-          <el-table-column label="币种" prop="coin" align="center" />
-          <el-table-column label="状态" align="center">
+          <el-table-column label="质押数量" prop="amount" align="center" width="200" />
+          <el-table-column label="时间" prop="createdAt" align="center" width="200" />
+          <el-table-column label="状态" align="center" width="200">
             <template slot-scope="scope">
-              {{ scope.row.status === 'success' ? '成功':'正在处理' }}
+              <span>{{ getStakeStatus(scope.row.createdAt) }}</span>
             </template>
           </el-table-column>
-          <!-- <el-table-column
-            fixed="right"
-            width="150"
-            label="操作"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <el-button type="primary" class="btn-option" size="mini" @click="editHandler(scope.row)">查看下级</el-button>
-            </template>
-          </el-table-column> -->
         </el-table>
         <el-pagination
           :total="total"
@@ -57,22 +39,20 @@
 </template>
 
 <script>
-// import { getToken } from '@/utils/auth'
 import initList from '@/mixins/initList'
-import { withDrawList } from '@/api/orderModel'
+import { userStakeList } from '@/api/orderModel'
 
 const default_form = {
   address: ''
 }
 export default {
-  name: 'WithdrawList',
+  name: 'UserStakeList',
   components: { },
   mixins: [initList],
   data() {
     return {
       form: JSON.parse(JSON.stringify(default_form)),
       list: [],
-      coinType: 'usdt',
       totalCount: 0,
       totalArea: 0,
       totalPrice: 0
@@ -93,17 +73,21 @@ export default {
       this.form = JSON.parse(JSON.stringify(default_form))
       this.initList(1)
     },
-    switchTypeHandler: function() {
-      this.initList(1)
+    getStakeStatus(createdAt) {
+      if (!createdAt) return '-'
+      // createdAt 格式：2026-06-17 00:00:01
+      const created = new Date(createdAt.replace(/-/g, '/'))
+      if (isNaN(created.getTime())) return '-'
+      const thirtyDays = 30 * 24 * 60 * 60 * 1000
+      return Date.now() - created.getTime() > thirtyDays ? '已过期' : '质押中'
     },
     initList(page) {
-      withDrawList({
+      userStakeList({
         page: page || this.page,
-        coin: this.coinType,
         address: this.form.address
 
       }).then(res => {
-        this.list = res.withdraw
+        this.list = res.stakeList
         this.total = parseInt(res.count)
 
         this.loading = false
@@ -120,9 +104,6 @@ export default {
 .head-container {
   display: flex;
   flex-direction: column;
-  .cont-tab {
-    margin-bottom: 10px;
-  }
   .cont-search {
     display: flex;
     align-items: center;
