@@ -17,6 +17,11 @@
         <el-table v-loading="loading" :data="list" size="small" empty-text="暂无数据" style="width: 100%; margin-top: 20px;">
           <el-table-column label="地址" prop="address" align="center" width="200" />
           <el-table-column label="质押数量" prop="amount" align="center" width="200" />
+          <el-table-column label="价格" align="center" width="200">
+            <template slot-scope="scope">
+              <span>{{ scope.row.price }}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="时间" prop="createdAt" align="center" width="200" />
           <el-table-column label="状态" align="center" width="200">
             <template slot-scope="scope">
